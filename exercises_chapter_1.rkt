@@ -16,13 +16,53 @@
 ; Ex. 1.3
 
 (define (square x) (* x x))
+
 (define (sum-of-squares x y)
   (+ (square x) (square y)))
+
 (define (get-two-biggest x y z)
    (cond
      ((and (>= x z) (>= y z)) (list x y))
      ((and (>= y x) (>= z x)) (list y z))
      ((and (>= x y) (>= z y)) (list x z))))
       
-
 (apply sum-of-squares (get-two-biggest 2 3 4))
+
+; Ex. 1.7
+
+(define precision 0.000001)
+
+(define (sqrt-iter guess previous-guess x)
+  (if (good-enough? guess previous-guess)
+      guess
+      (sqrt-iter (improve guess x)
+                 guess
+                 x)))
+
+(define (improve guess x)
+  (average guess (/ x guess)))
+
+(define (average x y)
+  (/ (+ x y) 2))
+
+(define (good-enough? guess previous-guess)
+  (< (abs (- guess previous-guess)) precision))
+
+(define (sqrt x)
+  (sqrt-iter 1.0 0 x))
+
+; Ex. 1.8
+
+(define (cube-improve guess x)
+  (/ (+ (/ x (square guess)) (* guess 2)) 3))
+
+(define (cube-root x)
+  (cube-iter 1.0 0 x))
+
+(define (cube-iter guess previous-guess x)
+  (if (good-enough? guess previous-guess)
+      guess
+      (cube-iter (cube-improve guess x)
+                 guess
+                 x)))
+(cube-root 32)
