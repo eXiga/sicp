@@ -32,37 +32,33 @@
 
 (define precision 0.000001)
 
-(define (sqrt-iter guess previous-guess x)
-  (if (good-enough? guess previous-guess)
-      guess
-      (sqrt-iter (improve guess x)
-                 guess
-                 x)))
-
-(define (improve guess x)
-  (average guess (/ x guess)))
-
-(define (average x y)
-  (/ (+ x y) 2))
-
 (define (good-enough? guess previous-guess)
   (< (abs (- guess previous-guess)) precision))
 
 (define (sqrt x)
-  (sqrt-iter 1.0 0 x))
+  (define (sqrt-iter guess previous-guess)
+    (if (good-enough? guess previous-guess)
+        guess
+        (sqrt-iter (improve guess)
+                   guess)))
+  (define (improve guess)
+    (average guess (/ x guess)))
+  (define (average x y)
+    (/ (+ x y) 2))
+  (sqrt-iter 1.0 0))
+
+(sqrt 78)
 
 ; Ex. 1.8
 
-(define (cube-improve guess x)
-  (/ (+ (/ x (square guess)) (* guess 2)) 3))
-
 (define (cube-root x)
-  (cube-iter 1.0 0 x))
+  (define (cube-iter guess previous-guess)
+    (if (good-enough? guess previous-guess)
+        guess
+        (cube-iter (cube-improve guess)
+                   guess)))
+  (define (cube-improve guess)
+    (/ (+ (/ x (square guess)) (* guess 2)) 3))
+  (cube-iter 1.0 0))
 
-(define (cube-iter guess previous-guess x)
-  (if (good-enough? guess previous-guess)
-      guess
-      (cube-iter (cube-improve guess x)
-                 guess
-                 x)))
-(cube-root 32)
+(cube-root 79)
