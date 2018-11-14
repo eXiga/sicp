@@ -108,11 +108,59 @@
   (define (f a b c count)
     (if (= count 0)
         c
-        (f-iter (+ a b c) a b (- count 1))))
+        (f (+ a b c) a b (- count 1))))
   (f 2 1 0 count))
 
-; (f-recur 5) = 11
-(f-iter 11)
+(f-recur 5)
+(f-iter 5)
+
+; Ex. 1.12
+; Since recursive solution is too easy, I've decided to resolve this task
+; with iterative approach.
+
+(define (factorial n)
+  (define (fact-iter product counter max-count)
+    (if (> counter max-count)
+        product
+        (fact-iter (* counter product)
+                   (+ counter 1)
+                   max-count)))
+  (fact-iter 1 1 n))
+
+(define (binom k n)
+  (define (binom-numerator n)
+    (factorial n))
+  (define (binom-denominator k n)
+    (* (factorial k) (factorial (- n k))))
+  (/ (binom-numerator n) (binom-denominator k n)))
+
+(define (pascal-triangle-row-element row-number element-number)
+  (binom element-number row-number))
+
+(define (pascal-triangle-row row-number)
+  (define (build-row row-number element-number list)
+    (if (<= element-number row-number)
+        (build-row row-number (+ element-number 1)
+                   (cons
+                    (pascal-triangle-row-element row-number element-number)
+                    list)
+                   )
+        list
+        ))
+  (build-row row-number 0 '()))
+
+(display (pascal-triangle-row 0))
+(newline)
+(display (pascal-triangle-row 1))
+(newline)
+(display (pascal-triangle-row 2))
+(newline)
+(display (pascal-triangle-row 3))
+(newline)
+(display (pascal-triangle-row 4))
+
+
+
 
 
 
