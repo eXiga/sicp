@@ -69,7 +69,7 @@
   (define (fib-iter a b count)
     (if (= count 0)
         b
-        (fib-iter (+ a b) a (- count 1))))
+        (fib-iter (+ a b) a (dec count))))
   (fib-iter 1 0 n))
 
 (fib 10)
@@ -81,7 +81,7 @@
     (cond ((= amount 0) 1)
           ((or (< amount 0) (= number-of-coins 0)) 0)
           (else (+ (cc amount
-                       (- number-of-coins 1))
+                       (dec number-of-coins))
                    (cc (- amount
                           (highest-coin number-of-coins))
                        number-of-coins)))))
@@ -108,7 +108,7 @@
   (define (f a b c count)
     (if (= count 0)
         c
-        (f (+ a b c) a b (- count 1))))
+        (f (+ a b c) a b (dec count))))
   (f 2 1 0 count))
 
 (f-recur 5)
@@ -123,7 +123,7 @@
     (if (> counter max-count)
         product
         (fact-iter (* counter product)
-                   (+ counter 1)
+                   (inc counter)
                    max-count)))
   (fact-iter 1 1 n))
 
