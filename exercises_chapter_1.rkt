@@ -62,3 +62,35 @@
   (cube-iter 1.0 0))
 
 (cube-root 79)
+
+; Fibonacci
+
+(define (fib n)
+  (define (fib-iter a b count)
+    (if (= count 0)
+        b
+        (fib-iter (+ a b) a (- count 1))))
+  (fib-iter 1 0 n))
+
+(fib 10)
+
+; Money count
+
+(define (count-change amount number-of-coins)
+  (define (cc amount number-of-coins) 
+    (cond ((= amount 0) 1)
+          ((or (< amount 0) (= number-of-coins 0)) 0)
+          (else (+ (cc amount
+                       (- number-of-coins 1))
+                   (cc (- amount
+                          (highest-coin number-of-coins))
+                       number-of-coins)))))
+  (define (highest-coin number-of-coins)
+    (cond ((= number-of-coins 1) 1)
+          ((= number-of-coins 2) 5)
+          ((= number-of-coins 3) 10)
+          ((= number-of-coins 4) 25)
+          ((= number-of-coins 5) 50)))
+  (cc amount number-of-coins))
+
+(count-change 100 5)
