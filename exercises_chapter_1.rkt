@@ -134,19 +134,15 @@
     (* (factorial k) (factorial (- n k))))
   (/ (binom-numerator n) (binom-denominator k n)))
 
-(define (pascal-triangle-row-element row-number element-number)
+(define (pascal-triangle-element row-number element-number)
   (binom element-number row-number))
 
 (define (pascal-triangle-row row-number)
   (define (build-row row-number element-number list)
-    (if (<= element-number row-number)
-        (build-row row-number (+ element-number 1)
-                   (cons
-                    (pascal-triangle-row-element row-number element-number)
-                    list)
-                   )
+    (if (> element-number row-number)
         list
-        ))
+        (build-row row-number (inc element-number)
+                   (cons (pascal-triangle-element row-number element-number) list))))
   (build-row row-number 0 '()))
 
 (display (pascal-triangle-row 0))
@@ -158,9 +154,3 @@
 (display (pascal-triangle-row 3))
 (newline)
 (display (pascal-triangle-row 4))
-
-
-
-
-
-
