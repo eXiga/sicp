@@ -93,4 +93,26 @@
           ((= number-of-coins 5) 50)))
   (cc amount number-of-coins))
 
-(count-change 100 5)
+;(count-change 100 5)
+
+; Ex. 1.11
+
+(define (f-recur n)
+  (if (< n 3)
+      n
+      (+ (f-recur (- n 1))
+         (f-recur (- n 2))
+         (f-recur (- n 3)))))
+
+(define (f-iter count)
+  (define (f a b c count)
+    (if (= count 0)
+        c
+        (f-iter (+ a b c) a b (- count 1))))
+  (f 2 1 0 count))
+
+; (f-recur 5) = 11
+(f-iter 11)
+
+
+
